@@ -17,4 +17,22 @@ public class LinearEquation {
         //ROUND IT
         return distance;
     }
+
+    public double slope(){
+        double slope = (y2-y1)/(x2-x1);
+        return slope;
+    }
+
+    public String slopeString(){
+        String rise = Integer.toString(y2 - y1);
+        String run = Integer.toString(x2 - x1);
+        String slopeString = rise + "/" + run;
+        return slopeString;
+    }
+
+    public double yIntercept(){
+        double yIntercept = y1 - (slope() * x1);
+        return yIntercept;
+    }
+
 }
