@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
@@ -40,7 +38,6 @@ public class Main {
         String x3String = s.nextLine();
         double x3 = Double.parseDouble(x3String);
 
-        line1.thirdValue(x3);
-        System.out.println(line1.thirdValuePrint(x3));
+        System.out.println(line1.thirdValue(x3));
     }
 }
