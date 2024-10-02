@@ -55,13 +55,15 @@ public class LinearEquation {
     }
 
 
-    /** Finds the y-intercept of the equation. */
+    /** Finds the y-intercept of the equation and rounds it to the nearest 100th decimal place. */
     public double yIntercept(){
         double yIntercept = y1 - (slope() * x1);
         yIntercept = Math.round(yIntercept * 100.0) / 100.0;
         return yIntercept;
     }
-
+    
+    
+    /** This returns the equation in its full form (y = ax + b). If the y-intercept is 0, it doesn't show. If the y-intercept is negative, it doesn't write + -#, but writes x - #. If the slope is 1 it doesn't show. If the slope is -1, it will write -x. */
     public String equation(){
         String equation;
         if (slope() == 1){
@@ -111,6 +113,8 @@ public class LinearEquation {
         return equation;
     }
 
+    
+    /** This method finds the y-value for a third inputted x-value, rounded to the nearest 100th decimal place. */
     public String thirdValue(double x3){
         double y3 = (slope() * x3) + yIntercept();
         y3 = Math.round(y3 * 100.0) / 100.0;
@@ -119,6 +123,8 @@ public class LinearEquation {
 
     }
 
+    
+    /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
     public String toString(){
         String toPrint = "First Pair: (" + x1 + ", " + y1 + ") \nSecond Pair: (" + x2 + ", " + y2 + ") \nSlope: " + slopeString() + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
         return toPrint;
