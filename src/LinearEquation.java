@@ -19,12 +19,17 @@ public class LinearEquation {
         return distance;
     }
 
+
+
+    /** Finds the slope of the two points and rounds it to the nearest 100th decimal place*/
     public double slope(){
         double slope = (double) (y2 - y1) /(x2-x1);
         slope = Math.round(slope * 100.0) / 100.0;
         return slope;
     }
 
+
+    /** Finds the slope but makes it into a string. If the denominator is negative, it takes away the "-" and puts it in front of the fraction. If both the numerator and denominator are negative, it makes the fraction positive.*/
     public String slopeString(){
         String slopeString;
         String rise = Integer.toString(y2 - y1);
@@ -46,10 +51,11 @@ public class LinearEquation {
             slopeString = rise + "/" + run;
         }
 
-
         return slopeString;
     }
 
+
+    /** Finds the y-intercept of the equation. */
     public double yIntercept(){
         double yIntercept = y1 - (slope() * x1);
         yIntercept = Math.round(yIntercept * 100.0) / 100.0;
@@ -105,10 +111,12 @@ public class LinearEquation {
         return equation;
     }
 
-    public double thirdValue(double x3){
+    public String thirdValue(double x3){
         double y3 = (slope() * x3) + yIntercept();
         y3 = Math.round(y3 * 100.0) / 100.0;
-        return y3;
+        String thirdPrint = "Third Coordinate Pair: (" + (Math.round(x3 * 100.0) / 100.0) + ", " + y3 + ")";
+        return thirdPrint;
+
     }
 
     public String toString(){
@@ -116,9 +124,5 @@ public class LinearEquation {
         return toPrint;
     }
 
-    public String thirdValuePrint(double x3){
-        String thirdPrint = "Third Coordinate Pair: (" + (Math.round(x3 * 100.0) / 100.0) + ", " + thirdValue(x3) + ")";
-        return thirdPrint;
-    }
 
 }
