@@ -130,9 +130,16 @@ public class LinearEquation {
     /** This method finds the y-value for a third inputted x-value, rounded to the nearest 100th decimal place. */
     public String thirdValue(double x3){
         double yIntDouble = Double.parseDouble(yIntercept());
-        double y3 = (slope() * x3) + yIntDouble;
-        y3 = Math.round(y3 * 100.0) / 100.0;
-        String thirdPrint = "Third Coordinate Pair: (" + (Math.round(x3 * 100.0) / 100.0) + ", " + y3 + ")";
+        double y3Double = (slope() * x3) + yIntDouble;
+        String y3 = Double.toString(y3Double);
+        if (y3.substring(y3.length() - 2).equals(".0")){
+            y3 += "0";
+        }
+        String x3Str = Double.toString(x3);
+        if (x3Str.substring(x3Str.length() - 2).equals(".0")){
+            x3Str += "0";
+        }
+        String thirdPrint = "Third Coordinate Pair: (" + x3Str + ", " + y3 + ")";
         return thirdPrint;
 
     }
