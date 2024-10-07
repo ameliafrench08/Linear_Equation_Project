@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class LinearEquation {
     private int x1;
     private int x2;
@@ -12,10 +14,13 @@ public class LinearEquation {
     }
 
     /** Finds the distance between (x1, y1) and (x2, y2) in decimal form using the distance formula. Round to the nearest 1/100*/
-    public double distance(){
-        double distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-        distance = Math.round(distance * 100.0) / 100.0;
-        //ROUND IT
+    public String distance(){
+        double distanceDouble = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+        distanceDouble = Math.round(distanceDouble * 100.0) / 100.0;
+        String distance = Double.toString(distanceDouble);
+        if (distance.substring(distance.length() - 2).equals(".0")){
+            distance += "0";
+        }
         return distance;
     }
 
@@ -24,7 +29,6 @@ public class LinearEquation {
     /** Finds the slope of the two points and rounds it to the nearest 100th decimal place*/
     public double slope(){
         double slope = (double) (y2 - y1) /(x2-x1);
-        slope = Math.round(slope * 100.0) / 100.0;
         return slope;
     }
 
@@ -36,16 +40,20 @@ public class LinearEquation {
         String run = Integer.toString(x2 - x1);
         if (slope() == Math.round(slope())){
             slopeString = Double.toString(slope());
+            if (slopeString.substring(slopeString.length() - 2).equals(".0")){
+                slopeString = slopeString.substring(0, slopeString.length()-2);
+                slopeString = slopeString + "/1";
+            }
         }
         else {
             if (run.charAt(0) == '-'){
                 if (rise.charAt(0) == '-'){
-                    run = run.substring(1, run.length());
-                    rise = rise.substring(1, rise.length());
+                    run = run.substring(1);
+                    rise = rise.substring(1);
                 }
                 else {
                     rise = "-" + rise;
-                    run = run.substring(1, run.length());
+                    run = run.substring(1);
                 }
             }
             slopeString = rise + "/" + run;
@@ -56,22 +64,26 @@ public class LinearEquation {
 
 
     /** Finds the y-intercept of the equation and rounds it to the nearest 100th decimal place. */
-    public double yIntercept(){
-        double yIntercept = y1 - (slope() * x1);
-        yIntercept = Math.round(yIntercept * 100.0) / 100.0;
-        return yIntercept;
+    public String yIntercept(){
+        double yInterceptDouble = y1 - (slope() * x1);
+        yInterceptDouble = Math.round(yInterceptDouble * Math.pow(10, 2)) / Math.pow(10, 2);
+        String yInterceptStr = String.valueOf(yInterceptDouble);
+        if (yInterceptStr.substring(yInterceptStr.length() - 2).equals(".0")){
+            yInterceptStr = yInterceptStr + "0";
+        }
+        return yInterceptStr;
     }
-    
-    
+
+
     /** This returns the equation in its full form (y = ax + b). If the y-intercept is 0, it doesn't show. If the y-intercept is negative, it doesn't write + -#, but writes x - #. If the slope is 1 it doesn't show. If the slope is -1, it will write -x. */
     public String equation(){
         String equation;
         if (slope() == 1){
-            if (yIntercept() == 0) {
+            if (Objects.equals(yIntercept(), "0")) {
                 equation = "y = x";
             }
             else{
-                if (yIntercept() < 0){
+                if (yIntercept().substring(0, 1).equals("-")){
                     equation = "y = x - " + yIntercept();
                 }
                 else {
@@ -80,11 +92,11 @@ public class LinearEquation {
             }
         }
         else if (slope() == -1.0) {
-            if (yIntercept() == 0){
+            if (Objects.equals(yIntercept(), "0")){
                 equation = "y = -x";
             }
             else {
-                if (yIntercept() < 0){
+                if (yIntercept().substring(0, 1).equals("-")){
                     equation = "y = -x - " + yIntercept();
                 }
                 else {
@@ -93,14 +105,15 @@ public class LinearEquation {
             }
         }
         else {
-            if (yIntercept() == 0){
+            if (Objects.equals(yIntercept(), "0")){
                 equation = "y = " + slopeString() + "x";
             }
             else {
-                if (yIntercept() < 0){
-                    double yInt = yIntercept();
+                if (yIntercept().substring(0, 1).equals("-")){
+                    double yIntDouble = Double.parseDouble(yIntercept());
+                    double yInt = yIntDouble;
                     String yIntString = Double.toString(yInt);
-                    yIntString = yIntString.substring(1, yIntString.length());
+                    yIntString = yIntString.substring(1);
                     equation = "y = " + slopeString() + "x - " + yIntString;
                 }
                 else {
@@ -113,17 +126,18 @@ public class LinearEquation {
         return equation;
     }
 
-    
+
     /** This method finds the y-value for a third inputted x-value, rounded to the nearest 100th decimal place. */
     public String thirdValue(double x3){
-        double y3 = (slope() * x3) + yIntercept();
+        double yIntDouble = Double.parseDouble(yIntercept());
+        double y3 = (slope() * x3) + yIntDouble;
         y3 = Math.round(y3 * 100.0) / 100.0;
         String thirdPrint = "Third Coordinate Pair: (" + (Math.round(x3 * 100.0) / 100.0) + ", " + y3 + ")";
         return thirdPrint;
 
     }
 
-    
+
     /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
     public String toString(){
         String toPrint = "First Pair: (" + x1 + ", " + y1 + ") \nSecond Pair: (" + x2 + ", " + y2 + ") \nSlope: " + slopeString() + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
