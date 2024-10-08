@@ -45,6 +45,14 @@ public class LinearEquation {
         double slope = (double) (findPoints()[3] - findPoints()[1]) /(findPoints()[2]-findPoints()[0]);
         return slope;
     }
+    
+    public String slopeDecimalString(){
+        String slopeRounded = String.valueOf(Math.round(slope() * 100)/100);
+        if (slopeRounded.substring(slopeRounded.length() - 1).equals(".0")){
+            slopeRounded += "0";
+        }
+        return slopeRounded;
+    }
 
 
     /** Finds the slope but makes it into a string. If the denominator is negative, it takes away the "-" and puts it in front of the fraction. If both the numerator and denominator are negative, it makes the fraction positive.*/
@@ -149,6 +157,9 @@ public class LinearEquation {
         if (y3.substring(y3.length() - 2).equals(".0")){
             y3 += "0";
         }
+        else{
+            y3 = String.valueOf(Math.round(y3Double * 100.0)/100.0);
+        }
         String x3Str = Double.toString(x3);
         if (x3Str.substring(x3Str.length() - 2).equals(".0")){
             x3Str += "0";
@@ -161,7 +172,7 @@ public class LinearEquation {
 
     /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
     public String toString(){
-        String toPrint = "First Pair: (" + findPoints()[0] + ", " + findPoints()[1] + ") \nSecond Pair: (" + findPoints()[2] + ", " + findPoints()[3] + ") \nSlope: " + (Math.round(slope() * 100.0)/100.0) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
+        String toPrint = "First Pair: (" + findPoints()[0] + ", " + findPoints()[1] + ") \nSecond Pair: (" + findPoints()[2] + ", " + findPoints()[3] + ") \nSlope: " + (slopeDecimalString()) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
         return toPrint;
     }
 
