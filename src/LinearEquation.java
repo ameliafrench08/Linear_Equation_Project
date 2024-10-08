@@ -1,21 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LinearEquation {
-    private int x1;
-    private int x2;
-    private int y1;
-    private int y2;
+    private String point1;
+    private String point2;
 
-    public LinearEquation(int x1, int x2, int y1, int y2){
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
+    public LinearEquation(String point1, String point2){
+        this.point1 = point1;
+        this.point2 = point2;
+
+    }
+
+    int[] findPoints(){
+        int commaIndexP1 = point1.indexOf(",");
+        int x1 = Integer.parseInt(point1.substring(1, commaIndexP1));
+        int y1 = Integer.parseInt(point1.substring(commaIndexP1 + 1, point1.length()));
+
+        int commaIndexP2 = point2.indexOf(",");
+        int x2 = Integer.parseInt(point2.substring(1, commaIndexP2));
+        int y2 = Integer.parseInt(point2.substring(commaIndexP2 + 1, point2.length()));
+
+       int[] points = {x1, y1, x2, y2};
+
+        return points;
     }
 
     /** Finds the distance between (x1, y1) and (x2, y2) in decimal form using the distance formula. Round to the nearest 1/100*/
     public String distance(){
-        double distanceDouble = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+        double distanceDouble = Math.sqrt(Math.pow((findPoints()[2] - findPoints()[0]), 2) + Math.pow((findPoints()[3] - findPoints()[1]), 2));
         distanceDouble = Math.round(distanceDouble * 100.0) / 100.0;
         String distance = Double.toString(distanceDouble);
         if (distance.substring(distance.length() - 2).equals(".0")){
@@ -28,7 +41,7 @@ public class LinearEquation {
 
     /** Finds the slope of the two points and rounds it to the nearest 100th decimal place*/
     public double slope(){
-        double slope = (double) (y2 - y1) /(x2-x1);
+        double slope = (double) (findPoints()[3] - findPoints()[1]) /(findPoints()[2]-findPoints()[0]);
         return slope;
     }
 
@@ -36,8 +49,8 @@ public class LinearEquation {
     /** Finds the slope but makes it into a string. If the denominator is negative, it takes away the "-" and puts it in front of the fraction. If both the numerator and denominator are negative, it makes the fraction positive.*/
     public String slopeString(){
         String slopeString;
-        String rise = Integer.toString(y2 - y1);
-        String run = Integer.toString(x2 - x1);
+        String rise = Integer.toString(findPoints()[3] - findPoints()[1]);
+        String run = Integer.toString(findPoints()[2] - findPoints()[0]);
         if (slope() == Math.round(slope())){
             slopeString = Double.toString(slope());
             if (slopeString.substring(slopeString.length() - 2).equals(".0")){
@@ -147,7 +160,7 @@ public class LinearEquation {
 
     /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
     public String toString(){
-        String toPrint = "First Pair: (" + x1 + ", " + y1 + ") \nSecond Pair: (" + x2 + ", " + y2 + ") \nSlope: " + slopeString() + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
+        String toPrint = "First Pair: (" + x1 + ", " + y1 + ") \nSecond Pair: (" + x2 + ", " + y2 + ") \nSlope: " + (Math.round(slope() * 100.0)/100.0) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
         return toPrint;
     }
 
