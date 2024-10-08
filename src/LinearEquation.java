@@ -14,12 +14,13 @@ public class LinearEquation {
 
     int[] findPoints(){
         int commaIndexP1 = point1.indexOf(",");
+
         int x1 = Integer.parseInt(point1.substring(1, commaIndexP1));
-        int y1 = Integer.parseInt(point1.substring(commaIndexP1 + 1, point1.length()));
+        int y1 = Integer.parseInt(point1.substring(commaIndexP1 + 1, point1.length()-1));
 
         int commaIndexP2 = point2.indexOf(",");
         int x2 = Integer.parseInt(point2.substring(1, commaIndexP2));
-        int y2 = Integer.parseInt(point2.substring(commaIndexP2 + 1, point2.length()));
+        int y2 = Integer.parseInt(point2.substring(commaIndexP2 + 1, point2.length()-1));
 
        int[] points = {x1, y1, x2, y2};
 
@@ -78,7 +79,7 @@ public class LinearEquation {
 
     /** Finds the y-intercept of the equation and rounds it to the nearest 100th decimal place. */
     public String yIntercept(){
-        double yInterceptDouble = y1 - (slope() * x1);
+        double yInterceptDouble = findPoints()[1] - (slope() * findPoints()[0]);
         yInterceptDouble = Math.round(yInterceptDouble * Math.pow(10, 2)) / Math.pow(10, 2);
         String yInterceptStr = String.valueOf(yInterceptDouble);
         if (yInterceptStr.substring(yInterceptStr.length() - 2).equals(".0")){
@@ -160,7 +161,7 @@ public class LinearEquation {
 
     /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
     public String toString(){
-        String toPrint = "First Pair: (" + x1 + ", " + y1 + ") \nSecond Pair: (" + x2 + ", " + y2 + ") \nSlope: " + (Math.round(slope() * 100.0)/100.0) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
+        String toPrint = "First Pair: (" + findPoints()[0] + ", " + findPoints()[1] + ") \nSecond Pair: (" + findPoints()[2] + ", " + findPoints()[3] + ") \nSlope: " + (Math.round(slope() * 100.0)/100.0) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
         return toPrint;
     }
 
