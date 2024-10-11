@@ -47,10 +47,10 @@ public class LinearEquation {
     }
 
     public String slopeDecimalString(){
-        String slopeRounded = String.valueOf(Math.round(slope() * 100)/100);
+        String slopeRounded = Double.toString((double) Math.round(slope() * 100) /100);
         if (slopeRounded.substring(slopeRounded.length() - 1).equals(".0")){
             slopeRounded += "0";
-        } else if (!slopeRounded.substring(slopeRounded.length() - 1).equals(".")) {
+        } else if (slopeRounded.indexOf(".") == -1) {
             slopeRounded += ".00";
         }
         return slopeRounded;
