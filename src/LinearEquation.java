@@ -88,95 +88,92 @@ public class LinearEquation {
 
 
     /** Finds the y-intercept of the equation and rounds it to the nearest 100th decimal place. */
-    public String yIntercept(){
+    public String yIntercept() {
         double yInterceptDouble = findPoints()[1] - (slope() * findPoints()[0]);
-        yInterceptDouble = Math.round(yInterceptDouble * Math.pow(10, 2)) / Math.pow(10, 2);
+        yInterceptDouble = Math.round(yInterceptDouble * 100.0) / 100.0;
         String yInterceptStr = String.valueOf(yInterceptDouble);
-        if (yInterceptStr.substring(yInterceptStr.length() - 2).equals(".0")){
+        if (yInterceptStr.substring(yInterceptStr.length() - 2).equals(".0")) {
             yInterceptStr = yInterceptStr + "0";
+        } else if (yInterceptStr.indexOf(".") == -1) {
+            yInterceptStr += ".00";
         }
-        return yInterceptStr;
-    }
+            return yInterceptStr;
+        }
 
 
-    /** This returns the equation in its full form (y = ax + b). If the y-intercept is 0, it doesn't show. If the y-intercept is negative, it doesn't write + -#, but writes x - #. If the slope is 1 it doesn't show. If the slope is -1, it will write -x. */
-    public String equation(){
-        String equation;
-        if (slope() == 1){
-            if (Objects.equals(yIntercept(), "0")) {
-                equation = "y = x";
-            }
-            else{
-                if (yIntercept().substring(0, 1).equals("-")){
-                    equation = "y = x - " + yIntercept();
+        /** This returns the equation in its full form (y = ax + b). If the y-intercept is 0, it doesn't show. If the y-intercept is negative, it doesn't write + -#, but writes x - #. If the slope is 1 it doesn't show. If the slope is -1, it will write -x. */
+        public String equation(){
+            String equation;
+            if (slope() == 1) {
+                if (Objects.equals(yIntercept(), "0")) {
+                    equation = "y = x";
+                } else {
+                    if (yIntercept().substring(0, 1).equals("-")) {
+                        equation = "y = x - " + yIntercept();
+                    } else {
+                        equation = "y = x + " + yIntercept();
+                    }
                 }
-                else {
-                    equation = "y = x + " + yIntercept();
+            } else if (slope() == -1.0) {
+                if (Objects.equals(yIntercept(), "0")) {
+                    equation = "y = -x";
+                } else {
+                    if (yIntercept().substring(0, 1).equals("-")) {
+                        equation = "y = -x - " + yIntercept();
+                    } else {
+                        equation = "y = -x + " + yIntercept();
+                    }
+                }
+            } else {
+                if (Objects.equals(yIntercept(), "0")) {
+                    equation = "y = " + slopeString() + "x";
+                } else {
+                    if (yIntercept().substring(0, 1).equals("-")) {
+                        double yIntDouble = Double.parseDouble(yIntercept());
+                        double yInt = yIntDouble;
+                        String yIntString = Double.toString(yInt);
+                        yIntString = yIntString.substring(1);
+                        equation = "y = " + slopeString() + "x - " + yIntString;
+                    } else {
+                        equation = "y = " + slopeString() + "x + " + yIntercept();
+                    }
                 }
             }
+
+            return equation;
         }
-        else if (slope() == -1.0) {
-            if (Objects.equals(yIntercept(), "0")){
-                equation = "y = -x";
+
+
+        /** This method finds the y-value for a third inputted x-value, rounded to the nearest 100th decimal place. */
+        public String thirdValue( double x3){
+            double yIntDouble = Double.parseDouble(yIntercept());
+            double y3Double = (slope() * x3) + yIntDouble;
+            String y3 = Double.toString(y3Double);
+            if (y3.substring(y3.length() - 2).equals(".0")) {
+                y3 += "0";
+            } else if (y3.indexOf(".") == -1) {
+                y3 += ".00";
             }
             else {
-                if (yIntercept().substring(0, 1).equals("-")){
-                    equation = "y = -x - " + yIntercept();
-                }
-                else {
-                    equation = "y = -x + " + yIntercept();
-                }
+                y3 = String.valueOf(Math.round(y3Double * 100.0) / 100.0);
             }
-        }
-        else {
-            if (Objects.equals(yIntercept(), "0")){
-                equation = "y = " + slopeString() + "x";
+            String x3Str = Double.toString(x3);
+            if (x3Str.substring(x3Str.length() - 2).equals(".0")) {
+                x3Str += "0";
+            } else if (x3Str.indexOf(".") == -1) {
+                x3Str += ".00";
             }
-            else {
-                if (yIntercept().substring(0, 1).equals("-")){
-                    double yIntDouble = Double.parseDouble(yIntercept());
-                    double yInt = yIntDouble;
-                    String yIntString = Double.toString(yInt);
-                    yIntString = yIntString.substring(1);
-                    equation = "y = " + slopeString() + "x - " + yIntString;
-                }
-                else {
-                    equation = "y = " + slopeString() + "x + " + yIntercept();
-                }
-            }
+            String thirdPrint = "Third Coordinate Pair: (" + x3Str + ", " + y3 + ")";
+
+            return thirdPrint;
+
         }
 
 
-        return equation;
-    }
-
-
-    /** This method finds the y-value for a third inputted x-value, rounded to the nearest 100th decimal place. */
-    public String thirdValue(double x3){
-        double yIntDouble = Double.parseDouble(yIntercept());
-        double y3Double = (slope() * x3) + yIntDouble;
-        String y3 = Double.toString(y3Double);
-        if (y3.substring(y3.length() - 2).equals(".0")){
-            y3 += "0";
+        /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
+        public String toString() {
+            String toPrint = "First Pair: (" + findPoints()[0] + ", " + findPoints()[1] + ") \nSecond Pair: (" + findPoints()[2] + ", " + findPoints()[3] + ") \nSlope: " + (slopeDecimalString()) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
+            return toPrint;
         }
-        else{
-            y3 = String.valueOf(Math.round(y3Double * 100.0)/100.0);
-        }
-        String x3Str = Double.toString(x3);
-        if (x3Str.substring(x3Str.length() - 2).equals(".0")){
-            x3Str += "0";
-        }
-        String thirdPrint = "Third Coordinate Pair: (" + x3Str + ", " + y3 + ")";
-        return thirdPrint;
 
     }
-
-
-    /** Returns a statement with all the information (except for thirdvalue) to be printed.*/
-    public String toString(){
-        String toPrint = "First Pair: (" + findPoints()[0] + ", " + findPoints()[1] + ") \nSecond Pair: (" + findPoints()[2] + ", " + findPoints()[3] + ") \nSlope: " + (slopeDecimalString()) + "\nY-intercept: " + yIntercept() + "\nSlope Intercept Form: " + equation() + "\nDistance Between Points: " + distance(); // Add the actual values
-        return toPrint;
-    }
-
-
-}
