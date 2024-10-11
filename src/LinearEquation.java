@@ -22,7 +22,7 @@ public class LinearEquation {
         int x2 = Integer.parseInt(point2.substring(1, commaIndexP2));
         int y2 = Integer.parseInt(point2.substring(commaIndexP2 + 1, point2.length()-1));
 
-       int[] points = {x1, y1, x2, y2};
+        int[] points = {x1, y1, x2, y2};
 
         return points;
     }
@@ -45,11 +45,13 @@ public class LinearEquation {
         double slope = (double) (findPoints()[3] - findPoints()[1]) /(findPoints()[2]-findPoints()[0]);
         return slope;
     }
-    
+
     public String slopeDecimalString(){
         String slopeRounded = String.valueOf(Math.round(slope() * 100)/100);
         if (slopeRounded.substring(slopeRounded.length() - 1).equals(".0")){
             slopeRounded += "0";
+        } else if (!slopeRounded.substring(slopeRounded.length() - 1).equals(".")) {
+            slopeRounded += ".00";
         }
         return slopeRounded;
     }
